@@ -1,5 +1,7 @@
 package cn.xa.rfesvc;
 
+import cn.xa.api.SpecClient;
+import cn.xa.api.SpecDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

@@ -1,7 +1,7 @@
 package cn.xa.specsvc;
 
+import cn.xa.api.SpecDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SpecController {
 
-//    @PostMapping("/create")
+    @PostMapping("/create")
     public SpecDto createSpec(@RequestBody SpecDto specRequest) {
-        return new SpecDto();
+        return SpecDto.builder()
+                .title(specRequest.getTitle())
+                .quantity(specRequest.getQuantity())
+                .build();
     }
 
 
