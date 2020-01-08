@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 public class RfeService {
 
     private final RfeRepository rfeRepository;
-//    private final SpecClient specClient;
+    private final SpecClient specClient;
 //    private final JobClient jobClient;
 //    private final TaskClient taskClient;
 //    private final TrackingClient trackingClient;
@@ -39,7 +39,14 @@ public class RfeService {
         // TODO: CREATE RFE ITEMS
 
         // TODO: CREATE SPEC
+        SpecDto specRequest = SpecDto.builder()
+                .title("spec 1")
+                .quantity(100L)
+                .build();
+        SpecDto specDto = specClient.createSpec(specRequest);
+
         // TODO: CREATE JOB
+
         // TODO: CREATE TASK
         // TODO: CREATE TRACKING
 
