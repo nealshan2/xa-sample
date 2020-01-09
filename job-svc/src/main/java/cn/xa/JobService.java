@@ -23,6 +23,10 @@ public class JobService {
                 .build();
         jobRepository.save(job);
 
+        if(job.getId() != null) {
+            throw new ServiceException("force to throw exception for testing transaction");
+        }
+
         return JobDto.builder()
                 .id(job.getId())
                 .title(job.getTitle())
