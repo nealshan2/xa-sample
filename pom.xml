@@ -86,31 +86,33 @@
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
-                <configuration>
-                    <finalName>${project.build.finalName}</finalName>
-                    <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
-                    </jvmArguments>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                        <configuration>
-                            <!-- The jar is repackaged and all the packages and classes are put in the BOOT-INF folder.
-                            Maven is unable to find them. so only package as a executable jar for spring boot by add classifier exec: -->
-                            <classifier>exec</classifier>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <configuration>
+                        <finalName>${project.build.finalName}</finalName>
+                        <jvmArguments>
+                            -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+                        </jvmArguments>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                            <!--<configuration>-->
+                                <!--&lt;!&ndash; The jar is repackaged and all the packages and classes are put in the BOOT-INF folder.-->
+                                <!--Maven is unable to find them. so only package as a executable jar for spring boot by add classifier exec: &ndash;&gt;-->
+                                <!--<classifier>exec</classifier>-->
+                            <!--</configuration>-->
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
