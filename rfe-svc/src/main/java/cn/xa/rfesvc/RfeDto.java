@@ -2,6 +2,7 @@ package cn.xa.rfesvc;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @Data
 @Builder
+@NoArgsConstructor
 public class RfeDto {
     private Long id;
     private String title;
