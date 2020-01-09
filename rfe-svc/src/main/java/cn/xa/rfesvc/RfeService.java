@@ -1,5 +1,7 @@
 package cn.xa.rfesvc;
 
+import cn.xa.JobClient;
+import cn.xa.JobDto;
 import cn.xa.api.SpecClient;
 import cn.xa.api.SpecDto;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ public class RfeService {
 
     private final RfeRepository rfeRepository;
     private final SpecClient specClient;
-//    private final JobClient jobClient;
+    private final JobClient jobClient;
 //    private final TaskClient taskClient;
 //    private final TrackingClient trackingClient;
 
@@ -48,6 +50,12 @@ public class RfeService {
         SpecDto specDto = specClient.createSpec(specRequest);
 
         // TODO: CREATE JOB
+
+        JobDto jobRequest = JobDto.builder()
+                .title("create Estimate")
+                .detail("Neal created a estimate")
+                .build();
+        JobDto jobDto = jobClient.createJob(jobRequest);
 
         // TODO: CREATE TASK
         // TODO: CREATE TRACKING
