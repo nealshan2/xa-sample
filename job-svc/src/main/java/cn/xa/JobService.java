@@ -3,11 +3,13 @@ package cn.xa;
 import cn.xa.job.JobDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Neal Shan
  * @since 0.0.1
  */
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class JobService {

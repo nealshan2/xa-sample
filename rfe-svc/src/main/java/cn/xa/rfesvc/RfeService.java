@@ -6,12 +6,14 @@ import cn.xa.spec.SpecClient;
 import cn.xa.spec.SpecDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 /**
  * @author Neal Shan
  * @since 0.0.1
  */
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class RfeService {

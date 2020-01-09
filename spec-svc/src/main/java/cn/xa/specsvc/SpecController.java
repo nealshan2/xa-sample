@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SpecController {
 
+    private final SpecService specService;
+
     @PostMapping("/create")
     public SpecDto createSpec(@RequestBody SpecDto specRequest) {
-        return SpecDto.builder()
-                .title(specRequest.getTitle())
-                .quantity(specRequest.getQuantity())
-                .build();
+        return specService.create(specRequest);
+
     }
 
 
