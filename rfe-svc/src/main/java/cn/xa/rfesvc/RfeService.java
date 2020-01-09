@@ -1,5 +1,6 @@
 package cn.xa.rfesvc;
 
+import cn.xa.common.exception.ServiceException;
 import cn.xa.job.JobClient;
 import cn.xa.job.JobDto;
 import cn.xa.spec.SpecClient;

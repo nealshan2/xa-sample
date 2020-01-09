@@ -18,6 +18,12 @@
     <url>http://www.example.com</url>
 
     <dependencies>
+        <!-- Common Lib -->
+        <dependency>
+            <groupId>cn.xa</groupId>
+            <artifactId>common-lib</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <dependency>
             <groupId>cn.xa</groupId>
             <artifactId>job-api</artifactId>

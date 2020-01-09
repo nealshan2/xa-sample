@@ -1,5 +1,6 @@
 package cn.xa;
 
+import cn.xa.common.exception.ServiceException;
 import cn.xa.job.JobDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

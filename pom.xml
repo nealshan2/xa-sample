@@ -17,11 +17,12 @@
     </properties>
 
     <modules>
-        <module>rfe-svc</module>
+        <module>common-lib</module>
         <module>spec-api</module>
         <module>spec-svc</module>
         <module>job-api</module>
         <module>job-svc</module>
+        <module>rfe-svc</module>
     </modules>
 
 
@@ -35,6 +36,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <!-- Spring Cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -42,6 +44,13 @@
                 <version>${spring.cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- Common Lib -->
+            <dependency>
+                <groupId>cn.xa</groupId>
+                <artifactId>common-lib</artifactId>
+                <version>0.0.1</version>
             </dependency>
 
 
