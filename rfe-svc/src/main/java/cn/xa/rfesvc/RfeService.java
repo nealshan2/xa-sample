@@ -1,9 +1,9 @@
 package cn.xa.rfesvc;
 
-import cn.xa.JobClient;
-import cn.xa.JobDto;
-import cn.xa.api.SpecClient;
-import cn.xa.api.SpecDto;
+import cn.xa.job.JobClient;
+import cn.xa.job.JobDto;
+import cn.xa.spec.SpecClient;
+import cn.xa.spec.SpecDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

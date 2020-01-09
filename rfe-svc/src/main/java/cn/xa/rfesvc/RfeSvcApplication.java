@@ -5,11 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"cn.xa.spec", "cn.xa.job"})
 public class RfeSvcApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RfeSvcApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RfeSvcApplication.class, args);
+    }
 
 }

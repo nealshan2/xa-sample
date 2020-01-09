@@ -1,4 +1,4 @@
-package cn.xa.api;
+package cn.xa.job;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +9,8 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class SpecDto {
+public class JobDto {
     private Long id;
     private String title;
-    private Long quantity;
+    private String detail;
 }

@@ -1,4 +1,4 @@
-package cn.xa.api;
+package cn.xa.spec;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

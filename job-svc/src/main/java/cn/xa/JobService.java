@@ -1,5 +1,6 @@
 package cn.xa;
 
+import cn.xa.job.JobDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

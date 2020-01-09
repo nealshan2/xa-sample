@@ -1,6 +1,6 @@
 package cn.xa.specsvc;
 
-import cn.xa.api.SpecDto;
+import cn.xa.spec.SpecDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
