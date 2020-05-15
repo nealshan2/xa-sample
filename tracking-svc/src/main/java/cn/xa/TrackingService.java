@@ -34,6 +34,7 @@ public class TrackingService {
                 .state(trackingDto.getState())
                 .build();
 
+
         collaborationClient.createCollaboration(collaborationDto);
 
         return trackingMapper.toDto(tracking);
