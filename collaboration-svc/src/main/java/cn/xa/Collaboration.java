@@ -24,4 +24,5 @@ public class Collaboration {
     private Long id;
     private Long parentId;
     private Long childId;
+    private String type;
 }
