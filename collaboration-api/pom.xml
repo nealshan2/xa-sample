@@ -8,11 +8,9 @@
     <artifactId>xa-sample</artifactId>
     <version>0.0.1</version>
   </parent>
+
   <artifactId>collaboration-api</artifactId>
   <version>0.0.1</version>
-
   <name>collaboration-api</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
 </project>

@@ -12,10 +12,7 @@
 
     <artifactId>collaboration-svc</artifactId>
     <version>0.0.1</version>
-
     <name>collaboration-svc</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
 
     <dependencies>
         <!-- Common Lib -->
@@ -40,7 +37,7 @@
                 <version>${spring.boot.version}</version>
                 <configuration>
                     <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5007
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5088
                     </jvmArguments>
                 </configuration>
             </plugin>
