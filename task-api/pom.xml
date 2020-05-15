@@ -8,9 +8,8 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>spec-api</artifactId>
+	<artifactId>task-api</artifactId>
 	<version>0.0.1</version>
-	<name>spec-api</name>
-	<description>spec api module for feign client interface and dto</description>
+	<name>task-api</name>
 
 </project>

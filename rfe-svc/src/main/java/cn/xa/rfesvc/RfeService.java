@@ -3,8 +3,8 @@ package cn.xa.rfesvc;
 import cn.xa.common.exception.ServiceException;
 import cn.xa.collaboration.JobClient;
 import cn.xa.collaboration.JobDto;
-import cn.xa.spec.SpecClient;
-import cn.xa.spec.SpecDto;
+import cn.xa.task.TaskClient;
+import cn.xa.task.TaskDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
 public class RfeService {
 
     private final RfeRepository rfeRepository;
-    private final SpecClient specClient;
+    private final TaskClient specClient;
     private final JobClient jobClient;
 //    private final TaskClient taskClient;
 //    private final TrackingClient trackingClient;
@@ -46,11 +46,11 @@ public class RfeService {
         // TODO: CREATE RFE ITEMS
 
         // TODO: CREATE SPEC
-        SpecDto specRequest = SpecDto.builder()
+        TaskDto specRequest = TaskDto.builder()
                 .title("spec 1")
                 .quantity(100L)
                 .build();
-        SpecDto specDto = specClient.createSpec(specRequest);
+        TaskDto specDto = specClient.createSpec(specRequest);
 
         // TODO: CREATE JOB
 

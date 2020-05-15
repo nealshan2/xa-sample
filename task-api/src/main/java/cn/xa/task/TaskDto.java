@@ -1,4 +1,4 @@
-package cn.xa.spec;
+package cn.xa.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpecDto {
+public class TaskDto {
     private Long id;
     private String title;
-    private Long quantity;
 }

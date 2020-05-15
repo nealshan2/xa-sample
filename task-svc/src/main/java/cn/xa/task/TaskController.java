@@ -1,6 +1,5 @@
-package cn.xa.specsvc;
+package cn.xa.task;
 
-import cn.xa.spec.SpecDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/v1/spec")
 @RequiredArgsConstructor
-public class SpecController {
+public class TaskController {
 
-    private final SpecService specService;
+    private final TaskService taskService;
 
     @PostMapping("/create")
-    public SpecDto createSpec(@RequestBody SpecDto specRequest) {
-        return specService.create(specRequest);
+    public TaskDto createSpec(@RequestBody TaskDto taskDto) {
+        return taskService.create(taskDto);
 
     }
 

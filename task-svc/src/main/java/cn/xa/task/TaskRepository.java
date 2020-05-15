@@ -1,4 +1,4 @@
-package cn.xa.specsvc;
+package cn.xa.task;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Neal Shan
  * @since 0.0.1
  */
-public interface SpecRepository extends JpaRepository<Spec, Long>{
+public interface TaskRepository extends JpaRepository<Task, Long>{
 }

@@ -1,4 +1,4 @@
-package cn.xa.specsvc;
+package cn.xa.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,11 +18,10 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Spec {
+public class Task {
 
     @Id
     @GeneratedValue
     private Long id;
     private String title;
-    private Long quantity;
 }

@@ -8,15 +8,24 @@
 		<version>0.0.1</version>
 	</parent>
 
-	<artifactId>spec-svc</artifactId>
+	<artifactId>task-svc</artifactId>
 	<version>0.0.1</version>
-	<name>spec-svc</name>
-	<description>Demo project for Spring Boot</description>
+	<name>task-svc</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>cn.xa</groupId>
-			<artifactId>spec-api</artifactId>
+			<artifactId>collaboration-api</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+        <dependency>
+			<groupId>cn.xa</groupId>
+			<artifactId>tracking-api</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+        <dependency>
+			<groupId>cn.xa</groupId>
+			<artifactId>task-api</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
@@ -29,7 +38,7 @@
                 <version>${spring.boot.version}</version>
                 <configuration>
                     <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5006
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5086
                     </jvmArguments>
                 </configuration>
             </plugin>
