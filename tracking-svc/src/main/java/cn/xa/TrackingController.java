@@ -1,6 +1,6 @@
 package cn.xa;
 
-import cn.xa.collaboration.JobDto;
+import cn.xa.tracking.TrackingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/job")
 @RequiredArgsConstructor
-public class JobController {
-    private final JobService jobService;
+public class TrackingController {
+    private final TrackingService trackingService;
 
     @PostMapping("/create")
-    public JobDto createJob(@RequestBody JobDto jobRequest) {
-        return jobService.create(jobRequest);
+    public TrackingDto createJob(@RequestBody TrackingDto jobRequest) {
+        return trackingService.create(jobRequest);
     }
 }

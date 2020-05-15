@@ -10,12 +10,9 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>job-svc</artifactId>
+    <artifactId>tracking-svc</artifactId>
     <version>0.0.1</version>
-
-    <name>job-svc</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <name>tracking-svc</name>
 
     <dependencies>
         <!-- Common Lib -->
@@ -26,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>cn.xa</groupId>
-            <artifactId>job-api</artifactId>
+            <artifactId>tracking-api</artifactId>
             <version>0.0.1</version>
         </dependency>
     </dependencies>
@@ -40,7 +37,7 @@
                 <version>${spring.boot.version}</version>
                 <configuration>
                     <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5007
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5087
                     </jvmArguments>
                 </configuration>
             </plugin>
