@@ -59,6 +59,13 @@ public class TrackingController extends TccParticipantController<TrackingDto>{
 
     @Override
     public ResponseEntity executeConfirm(String txId) {
-        return null;
+        TrackingDto trackingDto = trackingService.findByTxId(txId);
+        if (trackingDto == null) {
+//            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        trackingDto.setState(TccState.CONFIRMED);
+        trackingService.save(trackingDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

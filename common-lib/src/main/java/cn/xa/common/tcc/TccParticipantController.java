@@ -6,9 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by caibosi on 2018-07-27.
- */
 public abstract class TccParticipantController<T> {
 
     public static final String TCC_MEDIA_TYPE = "application/tcc";
