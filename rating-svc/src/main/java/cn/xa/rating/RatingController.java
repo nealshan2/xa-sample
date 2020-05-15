@@ -18,7 +18,7 @@ public class RatingController {
     private final RatingService ratingService;
 
     @PostMapping("/create")
-    public RatingDto createRfe(@RequestBody RatingDto rfeRequest) {
-        return ratingService.create(rfeRequest);
+    public RatingDto createRfe(@RequestBody RatingDto ratingDto) {
+        return ratingService.create(ratingDto);
     }
 }

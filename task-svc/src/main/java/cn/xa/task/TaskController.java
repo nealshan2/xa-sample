@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 0.0.1
  */
 @RestController
-@RequestMapping(path = "/v1/spec")
+@RequestMapping(path = "/v1/task")
 @RequiredArgsConstructor
 public class TaskController {
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 0.0.1
  */
 @RestController
-@RequestMapping("/v1/job")
+@RequestMapping("/v1/tracking")
 @RequiredArgsConstructor
 public class TrackingController {
     private final TrackingService trackingService;

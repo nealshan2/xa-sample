@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class RatingDto {
     private Long id;
+    @NotNull
     private String title;
     @NotNull
     private String reference;
