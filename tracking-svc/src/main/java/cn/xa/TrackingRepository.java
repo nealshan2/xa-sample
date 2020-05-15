@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 0.0.1
  */
 public interface TrackingRepository extends JpaRepository<Tracking, Long>{
+    Tracking findByTxId(String txId);
 }

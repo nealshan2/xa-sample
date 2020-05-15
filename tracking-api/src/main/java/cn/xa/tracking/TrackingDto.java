@@ -1,9 +1,12 @@
 package cn.xa.tracking;
 
+import cn.xa.common.tcc.TccState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Neal Shan
@@ -17,4 +20,11 @@ public class TrackingDto {
     private Long id;
     private String title;
     private String detail;
+
+    @NotNull
+    private String txId;
+
+    @NotNull
+    private TccState state;
+
 }

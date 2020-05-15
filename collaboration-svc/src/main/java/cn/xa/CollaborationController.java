@@ -38,6 +38,7 @@ public class CollaborationController extends TccParticipantController<Collaborat
     @Override
     public ResponseEntity executeTry(String txId, CollaborationDto body) {
         body.setTxId(txId);
+        body.setState(TccState.TRY);
         try{
             collaborationService.create(body);
             return ResponseEntity.status(HttpStatus.CREATED).build();

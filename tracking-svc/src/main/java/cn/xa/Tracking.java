@@ -1,13 +1,12 @@
 package cn.xa;
 
+import cn.xa.common.tcc.TccState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author Neal Shan
@@ -22,6 +21,9 @@ public class Tracking {
     @Id
     @GeneratedValue
     private Long id;
+    private String txId;
     private String title;
     private String detail;
+    @Enumerated(EnumType.STRING)
+    private TccState state;
 }
