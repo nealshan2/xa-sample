@@ -20,10 +20,10 @@
         <module>common-lib</module>
         <module>collaboration-api</module>
         <module>collaboration-svc</module>
+        <module>tracking-api</module>
+        <module>tracking-svc</module>
         <module>spec-api</module>
         <module>spec-svc</module>
-        <module>job-api</module>
-        <module>job-svc</module>
         <module>rfe-svc</module>
     </modules>
 

@@ -23,6 +23,11 @@
         </dependency>
         <dependency>
             <groupId>cn.xa</groupId>
+            <artifactId>collaboration-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.xa</groupId>
             <artifactId>tracking-api</artifactId>
             <version>0.0.1</version>
         </dependency>
