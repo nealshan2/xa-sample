@@ -22,4 +22,14 @@ public class CollaborationService {
         collaborationRepository.save(collaboration);
         return collaborationMapper.toDto(collaboration);
     }
+
+    public CollaborationDto save(CollaborationDto collaborationDto) {
+        Collaboration collaboration = collaborationMapper.toEntity(collaborationDto);
+        collaborationRepository.save(collaboration);
+        return collaborationMapper.toDto(collaboration);
+    }
+
+    public CollaborationDto findByTxId(String txId) {
+        return collaborationMapper.toDto(collaborationRepository.findByTxId(txId));
+    }
 }
