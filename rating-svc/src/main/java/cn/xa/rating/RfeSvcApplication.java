@@ -1,4 +1,4 @@
-package cn.xa.rfesvc;
+package cn.xa.rating;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

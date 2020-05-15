@@ -1,4 +1,4 @@
-package cn.xa.rfesvc;
+package cn.xa.rating;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Rfe {
+public class Rating {
     @Id
     @GeneratedValue
     private Long id;

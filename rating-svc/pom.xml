@@ -8,10 +8,9 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>rfe-svc</artifactId>
+    <artifactId>rating-svc</artifactId>
     <version>0.0.1</version>
-    <name>rfe-svc</name>
-    <description>Demo project for xa solution</description>
+    <name>rating-svc</name>
 
     <dependencies>
         <!-- Common Lib -->
@@ -22,12 +21,17 @@
         </dependency>
         <dependency>
             <groupId>cn.xa</groupId>
-            <artifactId>spec-api</artifactId>
+            <artifactId>collaboration-api</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>cn.xa</groupId>
-            <artifactId>job-api</artifactId>
+            <artifactId>task-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.xa</groupId>
+            <artifactId>tracking-api</artifactId>
             <version>0.0.1</version>
         </dependency>
     </dependencies>
@@ -40,7 +44,7 @@
                 <version>${spring.boot.version}</version>
                 <configuration>
                     <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5085
                     </jvmArguments>
                 </configuration>
             </plugin>

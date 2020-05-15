@@ -1,4 +1,4 @@
-package cn.xa.rfesvc;
+package cn.xa.rating;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * @author Neal Shan
@@ -16,11 +15,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RfeDto {
+public class RatingDto {
     private Long id;
     private String title;
     @NotNull
     private String reference;
-    private List<RfeItemDto> rfeItems;
 
 }

@@ -22,9 +22,9 @@
         <module>collaboration-svc</module>
         <module>tracking-api</module>
         <module>tracking-svc</module>
-        <module>spec-api</module>
-        <module>spec-svc</module>
-        <module>rfe-svc</module>
+        <module>task-api</module>
+        <module>task-svc</module>
+        <module>rating-svc</module>
     </modules>
 
 

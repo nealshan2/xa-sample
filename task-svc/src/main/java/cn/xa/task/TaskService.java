@@ -32,7 +32,7 @@ public class TaskService {
                 .build());
 
         trackingClient.createTracking(TrackingDto.builder()
-                .title(task.getTitle())
+                .title("create Task " + task.getTitle())
                 .detail(task.toString())
                 .build());
 

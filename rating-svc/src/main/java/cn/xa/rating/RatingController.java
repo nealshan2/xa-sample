@@ -1,4 +1,4 @@
-package cn.xa.rfesvc;
+package cn.xa.rating;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 0.0.1
  */
 @RestController
-@RequestMapping("/v1/rfe")
+@RequestMapping("/v1/rating")
 @RequiredArgsConstructor
-public class RfeController {
+public class RatingController {
 
-    private final RfeService rfeService;
+    private final RatingService ratingService;
 
     @PostMapping("/create")
-    public RfeDto createRfe(@RequestBody RfeDto rfeRequest) {
-        return rfeService.create(rfeRequest);
+    public RatingDto createRfe(@RequestBody RatingDto rfeRequest) {
+        return ratingService.create(rfeRequest);
     }
 }
