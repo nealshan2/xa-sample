@@ -47,12 +47,12 @@ public class RatingService {
                 .build());
 
         trackingClient.createTracking(TrackingDto.builder()
-                .title("create Rating " + rating.getTitle())
+                .title("Create Rating " + rating.getTitle())
                 .detail(rating.toString())
                 .build());
 
         taskClient.createTask(TaskDto.builder()
-                .title("review rating")
+                .title("Review rating " + rating.getTitle())
                 .build());
 
 
