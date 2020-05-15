@@ -1,8 +1,8 @@
 package cn.xa.rfesvc;
 
 import cn.xa.common.exception.ServiceException;
-import cn.xa.job.JobClient;
-import cn.xa.job.JobDto;
+import cn.xa.collaboration.JobClient;
+import cn.xa.collaboration.JobDto;
 import cn.xa.spec.SpecClient;
 import cn.xa.spec.SpecDto;
 import lombok.RequiredArgsConstructor;

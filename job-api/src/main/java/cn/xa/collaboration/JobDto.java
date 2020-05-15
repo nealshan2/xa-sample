@@ -1,4 +1,4 @@
-package cn.xa.job;
+package cn.xa.collaboration;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

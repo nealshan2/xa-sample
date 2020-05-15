@@ -1,0 +1,10 @@
+digraph G {
+    rating -> task
+    rating -> tracking
+    rating -> collaboration
+
+    task -> tracking
+    task -> collaboration
+
+    tracking -> collaboration
+}

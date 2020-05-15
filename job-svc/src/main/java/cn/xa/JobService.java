@@ -1,7 +1,7 @@
 package cn.xa;
 
 import cn.xa.common.exception.ServiceException;
-import cn.xa.job.JobDto;
+import cn.xa.collaboration.JobDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
