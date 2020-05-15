@@ -21,4 +21,6 @@ public class CollaborationDto {
     private Long parentId;
     @NotNull
     private Long childId;
+    @NotNull
+    private String type;
 }

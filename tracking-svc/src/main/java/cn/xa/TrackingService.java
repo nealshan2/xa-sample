@@ -2,6 +2,7 @@ package cn.xa;
 
 import cn.xa.collaboration.CollaborationClient;
 import cn.xa.collaboration.CollaborationDto;
+import cn.xa.collaboration.CollaborationType;
 import cn.xa.tracking.TrackingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class TrackingService {
         collaborationClient.createCollaboration(CollaborationDto.builder()
                 .parentId(100L)
                 .childId(tracking.getId())
+                .type(CollaborationType.TRACKING)
                 .build());
 
         return trackingMapper.toDto(tracking);

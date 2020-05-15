@@ -2,6 +2,7 @@ package cn.xa.rating;
 
 import cn.xa.collaboration.CollaborationClient;
 import cn.xa.collaboration.CollaborationDto;
+import cn.xa.collaboration.CollaborationType;
 import cn.xa.common.exception.ServiceException;
 import cn.xa.task.TaskClient;
 import cn.xa.task.TaskDto;
@@ -42,6 +43,7 @@ public class RatingService {
         collaborationClient.createCollaboration(CollaborationDto.builder()
                 .parentId(100L)
                 .childId(rating.getId())
+                .type(CollaborationType.RATING)
                 .build());
 
         trackingClient.createTracking(TrackingDto.builder()

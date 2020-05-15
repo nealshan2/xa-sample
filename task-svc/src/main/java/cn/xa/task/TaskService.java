@@ -2,6 +2,7 @@ package cn.xa.task;
 
 import cn.xa.collaboration.CollaborationClient;
 import cn.xa.collaboration.CollaborationDto;
+import cn.xa.collaboration.CollaborationType;
 import cn.xa.tracking.TrackingClient;
 import cn.xa.tracking.TrackingDto;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class TaskService {
         collaborationClient.createCollaboration(CollaborationDto.builder()
                 .parentId(100L)
                 .childId(task.getId())
+                .type(CollaborationType.TASK)
                 .build());
 
         trackingClient.createTracking(TrackingDto.builder()
