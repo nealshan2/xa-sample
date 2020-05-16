@@ -129,7 +129,7 @@ public class RatingService {
         if (StringUtils.hasText(ratingDto.getReference())) {
             Rating rating = ratingRepository.findByReference(ratingDto.getReference());
             if (rating != null) {
-                throw new ServiceException("Rfe reference is exist, please input a new one");
+                throw new ServiceException("rating reference is exist, please input a new one");
             }
         }
 
