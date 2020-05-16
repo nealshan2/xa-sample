@@ -35,17 +35,8 @@ public class TrackingService {
         Tracking tracking = trackingMapper.toEntity(trackingDto);
         trackingRepository.save(tracking);
 
-        List<ParticipantLink> participantLinks = new ArrayList<>(1);
-        long expireTime = System.currentTimeMillis() + TccConfig.TRANSACTION_TIMEOUT_MS;
         String txId = trackingDto.getTxId();
-
-
         String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        participantLinks.add(new ParticipantLink(collaborationServiceUrl, expireTime));
-
-        Transaction transaction = new Transaction(participantLinks);
-        // TODO: but I can not just start try/confirm/cancel here, this is just for try
-        // how do I call collaboration service?
         CollaborationDto collaborationDto = CollaborationDto.builder()
                 .parentId(100L)
                 .childId(tracking.getId())
@@ -53,7 +44,6 @@ public class TrackingService {
                 .txId(trackingDto.getTxId())
                 .state(trackingDto.getState())
                 .build();
-        // collaborationClient.createCollaboration(collaborationDto);
         restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
 
         return trackingMapper.toDto(tracking);
@@ -63,7 +53,27 @@ public class TrackingService {
         return trackingMapper.toDto(trackingRepository.findByTxId(txId));
     }
 
-    public void save(TrackingDto trackingDto) {
+    public TrackingDto save(TrackingDto trackingDto) {
 
+        Tracking tracking = trackingMapper.toEntity(trackingDto);
+        trackingRepository.save(tracking);
+
+        String txId = trackingDto.getTxId();
+        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+        restTemplate.put(collaborationServiceUrl, null);
+
+        return trackingMapper.toDto(tracking);
+
+    }
+
+    public TrackingDto delete(TrackingDto trackingDto) {
+        Tracking tracking = trackingMapper.toEntity(trackingDto);
+        trackingRepository.save(tracking);
+
+        String txId = trackingDto.getTxId();
+        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+        restTemplate.delete(collaborationServiceUrl);
+
+        return trackingMapper.toDto(tracking);
     }
 }

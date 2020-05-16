@@ -53,7 +53,7 @@ public class TrackingController extends TccParticipantController<TrackingDto>{
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         }
         trackingDto.setState(TccState.CANCELED);
-        trackingService.save(trackingDto);
+        trackingService.delete(trackingDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
