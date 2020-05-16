@@ -17,13 +17,15 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(uniqueConstraints = {@UniqueConstraint(name = "tracking_tx_idx", columnNames = {"txId"})})
 public class Tracking {
     @Id
     @GeneratedValue
     private Long id;
-    private String txId;
     private String title;
     private String detail;
+
+    private String txId;
     @Enumerated(EnumType.STRING)
     private TccState state;
 }

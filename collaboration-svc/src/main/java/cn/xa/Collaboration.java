@@ -22,10 +22,11 @@ public class Collaboration {
     @Id
     @GeneratedValue
     private Long id;
-    private String txId;
     private Long parentId;
     private Long childId;
     private String type;
+
+    private String txId;
     @Enumerated(EnumType.STRING)
     private TccState state;
 }

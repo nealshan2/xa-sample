@@ -17,6 +17,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(uniqueConstraints = {@UniqueConstraint(name = "task_tx_idx", columnNames = {"txId"})})
 public class Task {
 
     @Id

@@ -1,5 +1,6 @@
 package cn.xa.rating;
 
+import cn.xa.common.tcc.TccState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,8 @@ public class RatingDto {
     @NotNull
     private String reference;
 
+    @NotNull
+    private String txId;
+
+    private @NotNull TccState state;
 }

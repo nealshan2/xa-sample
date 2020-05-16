@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     Rating findByReference(String reference);
+
+    Rating findByTxId(String txId);
 }
