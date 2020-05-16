@@ -16,16 +16,9 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RatingDto {
+public class CreateRatingRequest {
     private Long id;
-    @NotNull
     private String title;
-    @NotNull
     private String reference;
-
-    @NotNull
     private String txId;
-
-    @NotNull
-    private TccState state;
 }
