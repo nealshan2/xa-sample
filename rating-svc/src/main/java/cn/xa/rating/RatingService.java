@@ -101,13 +101,6 @@ public class RatingService {
     }
 
     public RatingDto save(RatingDto ratingDto) {
-        if (StringUtils.hasText(ratingDto.getReference())) {
-            Rating rating = ratingRepository.findByReference(ratingDto.getReference());
-            if (rating != null) {
-                throw new ServiceException("Rfe reference is exist, please input a new one");
-            }
-        }
-
         Rating rating = ratingMapper.toEntity(ratingDto);
         ratingRepository.save(rating);
 
