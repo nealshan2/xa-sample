@@ -9,5 +9,5 @@ public interface TccConfig {
     String COLLABORATION_TCC_URL = "http://localhost:8088/v1/collaboration/tcc/%s";
     String TRACKING_TCC_URL = "http://localhost:8087/v1/tracking/tcc/%s";
     String TASK_TCC_URL = "http://localhost:8086/v1/task/tcc/%s";
-    String RATING_TCC_URL = "http://localhost:8086/v1/rating/tcc/%s";
+    String RATING_TCC_URL = "http://localhost:8085/v1/rating/tcc/%s";
 }
