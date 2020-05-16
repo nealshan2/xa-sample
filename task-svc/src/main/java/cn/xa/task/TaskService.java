@@ -7,9 +7,13 @@ import cn.xa.common.tcc.TccConfig;
 import cn.xa.tracking.TrackingClient;
 import cn.xa.tracking.TrackingDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
 
 /**
  * @author Neal Shan
@@ -73,10 +77,16 @@ public class TaskService {
 
         String txId = taskDto.getTxId();
         String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        restTemplate.put(collaborationServiceUrl, null);
+        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
+                .contentType(new MediaType("application", "tcc"))
+                .build();
+        restTemplate.exchange(requestEntity, String.class);
 
         String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        restTemplate.put(trackingServiceUrl, null);
+        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
+                .contentType(new MediaType("application", "tcc"))
+                .build();
+        restTemplate.exchange(requestEntity, String.class);
 
         return taskMapper.toDto(task);
 

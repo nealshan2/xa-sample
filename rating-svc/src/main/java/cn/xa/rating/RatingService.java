@@ -110,19 +110,18 @@ public class RatingService {
         String txId = ratingDto.getTxId();
 
         String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
-
         RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
                 .contentType(new MediaType("application", "tcc"))
                 .build();
         restTemplate.exchange(requestEntity, String.class);
 
+        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
         requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
                 .contentType(new MediaType("application", "tcc"))
                 .build();
         restTemplate.exchange(requestEntity, String.class);
 
+        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
         requestEntity = RequestEntity.put(URI.create(taskServiceUrl))
                 .contentType(new MediaType("application", "tcc"))
                 .build();

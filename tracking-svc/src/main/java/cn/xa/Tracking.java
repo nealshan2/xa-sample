@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = {@UniqueConstraint(name = "tracking_tx_idx", columnNames = {"txId"})})
+//@Table(uniqueConstraints = {@UniqueConstraint(name = "tracking_tx_idx", columnNames = {"txId"})})
 public class Tracking {
     @Id
     @GeneratedValue

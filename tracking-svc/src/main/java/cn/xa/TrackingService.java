@@ -9,10 +9,13 @@ import com.atomikos.tcc.rest.ParticipantLink;
 import com.atomikos.tcc.rest.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +63,10 @@ public class TrackingService {
 
         String txId = trackingDto.getTxId();
         String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        restTemplate.put(collaborationServiceUrl, null);
+        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
+                .contentType(new MediaType("application", "tcc"))
+                .build();
+        restTemplate.exchange(requestEntity, String.class);
 
         return trackingMapper.toDto(tracking);
 
