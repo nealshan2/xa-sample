@@ -1,13 +1,12 @@
 package cn.xa.task;
 
+import cn.xa.common.tcc.TccState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author Neal Shan
@@ -24,4 +23,9 @@ public class Task {
     @GeneratedValue
     private Long id;
     private String title;
+
+    private String txId;
+
+    @Enumerated(EnumType.STRING)
+    private TccState state;
 }

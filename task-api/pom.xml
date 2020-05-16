@@ -12,4 +12,12 @@
 	<version>0.0.1</version>
 	<name>task-api</name>
 
+	<dependencies>
+		<!-- Common Lib -->
+		<dependency>
+			<groupId>cn.xa</groupId>
+			<artifactId>common-lib</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+	</dependencies>
 </project>
