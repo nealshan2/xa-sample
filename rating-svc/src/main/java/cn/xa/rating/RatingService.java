@@ -14,12 +14,15 @@ import com.atomikos.tcc.rest.ParticipantLink;
 import com.atomikos.tcc.rest.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class RatingService {
         if (StringUtils.hasText(ratingDto.getReference())) {
             Rating rating = ratingRepository.findByReference(ratingDto.getReference());
             if (rating != null) {
-                throw new ServiceException("Rfe reference is exist, please input a new one");
+                throw new ServiceException("rating reference is exist, please input a new one");
             }
         }
 
@@ -110,9 +113,20 @@ public class RatingService {
         String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
         String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
 
-        restTemplate.put(collaborationServiceUrl, null);
-        restTemplate.put(trackingServiceUrl, null);
-        restTemplate.put(taskServiceUrl, null);
+        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
+                .contentType(new MediaType("application", "tcc"))
+                .build();
+        restTemplate.exchange(requestEntity, String.class);
+
+        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
+                .contentType(new MediaType("application", "tcc"))
+                .build();
+        restTemplate.exchange(requestEntity, String.class);
+
+        requestEntity = RequestEntity.put(URI.create(taskServiceUrl))
+                .contentType(new MediaType("application", "tcc"))
+                .build();
+        restTemplate.exchange(requestEntity, String.class);
 
         return ratingMapper.toDto(rating);
 
