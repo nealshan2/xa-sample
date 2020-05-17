@@ -33,23 +33,23 @@ public class TrackingService {
         Tracking tracking = trackingMapper.toEntity(trackingDto);
         trackingRepository.save(tracking);
 
-        String txId = trackingDto.getTxId();
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        CollaborationDto collaborationDto = CollaborationDto.builder()
-                .parentObjectId(100L)
-                .parentObjectClassId(ObjectClassId.PROJECT)
-                .objectId(tracking.getId())
-                .objectClassId(ObjectClassId.TRACKING)
-                .txId(trackingDto.getTxId())
-                .state(trackingDto.getState())
-                .build();
-        restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
+//        String txId = trackingDto.getTxId();
+//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+//        CollaborationDto collaborationDto = CollaborationDto.builder()
+//                .parentObjectId(100L)
+//                .parentObjectClassId(ObjectClassId.PROJECT)
+//                .objectId(tracking.getId())
+//                .objectClassId(ObjectClassId.TRACKING)
+//                .txId(trackingDto.getTxId())
+//                .state(trackingDto.getState())
+//                .build();
+//        restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
 
         return trackingMapper.toDto(tracking);
     }
 
-    public TrackingDto findByTxId(String txId) {
-        return trackingMapper.toDto(trackingRepository.findByTxId(txId));
+    public TrackingDto findByTxIdAndObjectIdAndObjectClassId(String txId, Long objectId, Long objectClassId) {
+        return trackingMapper.toDto(trackingRepository.findByTxIdAndObjectIdAndObjectClassId(txId, objectId, objectClassId));
     }
 
     public TrackingDto save(TrackingDto trackingDto) {
@@ -57,12 +57,12 @@ public class TrackingService {
         Tracking tracking = trackingMapper.toEntity(trackingDto);
         trackingRepository.save(tracking);
 
-        String txId = trackingDto.getTxId();
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
-                .contentType(new MediaType("application", "tcc"))
-                .build();
-        restTemplate.exchange(requestEntity, String.class);
+//        String txId = trackingDto.getTxId();
+//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+//        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
+//                .contentType(new MediaType("application", "tcc"))
+//                .build();
+//        restTemplate.exchange(requestEntity, String.class);
 
         return trackingMapper.toDto(tracking);
 
@@ -72,9 +72,9 @@ public class TrackingService {
         Tracking tracking = trackingMapper.toEntity(trackingDto);
         trackingRepository.save(tracking);
 
-        String txId = trackingDto.getTxId();
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        restTemplate.delete(collaborationServiceUrl);
+//        String txId = trackingDto.getTxId();
+//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+//        restTemplate.delete(collaborationServiceUrl);
 
         return trackingMapper.toDto(tracking);
     }

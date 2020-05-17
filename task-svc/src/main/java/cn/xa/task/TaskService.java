@@ -34,30 +34,30 @@ public class TaskService {
         Task task = taskMapper.toEntity(taskDto);
         taskRepository.save(task);
 
-        String txId = taskDto.getTxId();
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        CollaborationDto collaborationDto = CollaborationDto.builder()
-                .parentObjectId(100L)
-                .parentObjectClassId(ObjectClassId.PROJECT)
-                .objectId(task.getId())
-                .objectClassId(ObjectClassId.TASK)
-                .build();
-        restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
-
-        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        TrackingDto trackingDto = TrackingDto.builder()
-                .title("create Task " + task.getTitle())
-                .detail(task.toString())
-                .objectId(task.getId())
-                .objectClassId(ObjectClassId.TASK)
-                .build();
-        restTemplate.postForEntity(trackingServiceUrl, trackingDto, String.class);
+//        String txId = taskDto.getTxId();
+//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+//        CollaborationDto collaborationDto = CollaborationDto.builder()
+//                .parentObjectId(100L)
+//                .parentObjectClassId(ObjectClassId.PROJECT)
+//                .objectId(task.getId())
+//                .objectClassId(ObjectClassId.TASK)
+//                .build();
+//        restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
+//
+//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
+//        TrackingDto trackingDto = TrackingDto.builder()
+//                .title("create Task " + task.getTitle())
+//                .detail(task.toString())
+//                .objectId(task.getId())
+//                .objectClassId(ObjectClassId.TASK)
+//                .build();
+//        restTemplate.postForEntity(trackingServiceUrl, trackingDto, String.class);
 
         return taskMapper.toDto(task);
     }
 
-    public TaskDto findByTxId(String txId) {
-        return taskMapper.toDto(taskRepository.findByTxId(txId));
+    public TaskDto findByTxIdAndObjectIdAndObjectClassId(String txId, Long objectId, Long objectClassId) {
+        return taskMapper.toDto(taskRepository.findByTxIdAndObjectIdAndObjectClassId(txId, objectId, objectClassId));
     }
 
     public TaskDto delete(TaskDto taskDto) {
@@ -78,18 +78,18 @@ public class TaskService {
         Task task = taskMapper.toEntity(taskDto);
         taskRepository.save(task);
 
-        String txId = taskDto.getTxId();
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
-                .contentType(new MediaType("application", "tcc"))
-                .build();
-        restTemplate.exchange(requestEntity, String.class);
-
-        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
-                .contentType(new MediaType("application", "tcc"))
-                .build();
-        restTemplate.exchange(requestEntity, String.class);
+//        String txId = taskDto.getTxId();
+//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+//        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
+//                .contentType(new MediaType("application", "tcc"))
+//                .build();
+//        restTemplate.exchange(requestEntity, String.class);
+//
+//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
+//        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
+//                .contentType(new MediaType("application", "tcc"))
+//                .build();
+//        restTemplate.exchange(requestEntity, String.class);
 
         return taskMapper.toDto(task);
 

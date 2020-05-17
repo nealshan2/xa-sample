@@ -48,36 +48,6 @@ public class RatingService {
         Rating rating = ratingMapper.toEntity(ratingDto);
         ratingRepository.save(rating);
 
-        String txId = ratingDto.getTxId();
-
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
-
-        CollaborationDto collaborationDto = CollaborationDto.builder()
-                .parentObjectId(100L)
-                .parentObjectClassId(ObjectClassId.PROJECT)
-                .objectId(rating.getId())
-                .objectClassId(ObjectClassId.RATING)
-                .build();
-        restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
-
-        TrackingDto trackingDto = TrackingDto.builder()
-                .title("Create Rating " + rating.getTitle())
-                .detail(rating.toString())
-                .objectId(rating.getId())
-                .objectClassId(ObjectClassId.RATING)
-                .build();
-        restTemplate.postForEntity(trackingServiceUrl, trackingDto, String.class);
-
-        TaskDto taskDto = TaskDto.builder()
-                .title("Review rating " + rating.getTitle())
-                .objectId(rating.getId())
-                .objectClassId(ObjectClassId.RATING)
-                .build();
-        restTemplate.postForEntity(taskServiceUrl, taskDto, String.class);
-
-
         return ratingMapper.toDto(rating);
     }
 
@@ -89,14 +59,14 @@ public class RatingService {
         Rating rating = ratingMapper.toEntity(ratingDto);
         ratingRepository.save(rating);
 
-        String txId = ratingDto.getTxId();
-
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
-        restTemplate.delete(collaborationServiceUrl);
-        restTemplate.delete(trackingServiceUrl);
-        restTemplate.delete(taskServiceUrl);
+//        String txId = ratingDto.getTxId();
+//
+//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
+//        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
+//        restTemplate.delete(collaborationServiceUrl);
+//        restTemplate.delete(trackingServiceUrl);
+//        restTemplate.delete(taskServiceUrl);
 
 
         return ratingMapper.toDto(rating);
@@ -106,25 +76,25 @@ public class RatingService {
         Rating rating = ratingMapper.toEntity(ratingDto);
         ratingRepository.save(rating);
 
-        String txId = ratingDto.getTxId();
-
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
-                .contentType(new MediaType("application", "tcc"))
-                .build();
-        restTemplate.exchange(requestEntity, String.class);
-
-        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
-                .contentType(new MediaType("application", "tcc"))
-                .build();
-        restTemplate.exchange(requestEntity, String.class);
-
-        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
-        requestEntity = RequestEntity.put(URI.create(taskServiceUrl))
-                .contentType(new MediaType("application", "tcc"))
-                .build();
-        restTemplate.exchange(requestEntity, String.class);
+//        String txId = ratingDto.getTxId();
+//
+//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
+//        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
+//                .contentType(new MediaType("application", "tcc"))
+//                .build();
+//        restTemplate.exchange(requestEntity, String.class);
+//
+//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
+//        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
+//                .contentType(new MediaType("application", "tcc"))
+//                .build();
+//        restTemplate.exchange(requestEntity, String.class);
+//
+//        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
+//        requestEntity = RequestEntity.put(URI.create(taskServiceUrl))
+//                .contentType(new MediaType("application", "tcc"))
+//                .build();
+//        restTemplate.exchange(requestEntity, String.class);
 
         return ratingMapper.toDto(rating);
 

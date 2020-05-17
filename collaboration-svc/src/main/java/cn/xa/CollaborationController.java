@@ -1,18 +1,13 @@
 package cn.xa;
 
 import cn.xa.collaboration.CollaborationDto;
-import cn.xa.common.tcc.TccParticipantController;
 import cn.xa.common.tcc.TccState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 /**
  * @author Neal Shan
@@ -40,16 +35,18 @@ public class CollaborationController extends TccParticipantController<Collaborat
         body.setTxId(txId);
         body.setState(TccState.TRY);
         try{
-            collaborationService.create(body);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            CollaborationDto collaborationDto = collaborationService.create(body);
+            return ResponseEntity.status(HttpStatus.CREATED).body(collaborationDto);
         }catch (DataIntegrityViolationException e){
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            CollaborationDto collaborationDto = collaborationService.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(txId,
+                    body.getParentObjectId(), body.getParentObjectClassId(), body.getObjectId(), body.getObjectClassId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(collaborationDto);
         }
     }
 
     @Override
-    public ResponseEntity executeCancel(String txId) {
-        CollaborationDto collaborationDto = collaborationService.findByTxId(txId);
+    public ResponseEntity executeCancel(String txId, Long parentObjectId, Long parentObjectClassId, Long objectId, Long objectClassId) {
+        CollaborationDto collaborationDto = collaborationService.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(txId, parentObjectId, parentObjectClassId, objectId, objectClassId);
         if (collaborationDto == null) {
 //            return ResponseEntity.notFound().build();
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
@@ -60,8 +57,8 @@ public class CollaborationController extends TccParticipantController<Collaborat
     }
 
     @Override
-    public ResponseEntity executeConfirm(String txId) {
-        CollaborationDto collaborationDto = collaborationService.findByTxId(txId);
+    public ResponseEntity executeConfirm(String txId, Long parentObjectId, Long parentObjectClassId, Long objectId, Long objectClassId) {
+        CollaborationDto collaborationDto = collaborationService.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(txId, parentObjectId, parentObjectClassId, objectId, objectClassId);
         if (collaborationDto == null) {
 //            return ResponseEntity.notFound().build();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

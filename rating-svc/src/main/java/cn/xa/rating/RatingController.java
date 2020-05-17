@@ -38,10 +38,11 @@ public class RatingController extends TccParticipantController<RatingDto> {
         body.setTxId(txId);
         body.setState(TccState.TRY);
         try{
-            ratingService.create(body);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            RatingDto ratingDto = ratingService.create(body);
+            return ResponseEntity.status(HttpStatus.CREATED).body(ratingDto);
         }catch (DataIntegrityViolationException e){
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            RatingDto ratingDto = ratingService.findByTxId(txId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(ratingDto);
         }
     }
 

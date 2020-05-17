@@ -1,14 +1,10 @@
 package cn.xa.task;
 
-import cn.xa.common.tcc.TccParticipantController;
 import cn.xa.common.tcc.TccState;
-import cn.xa.tracking.TrackingDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,16 +36,17 @@ public class TaskController extends TccParticipantController<TaskDto> {
         body.setTxId(txId);
         body.setState(TccState.TRY);
         try{
-            taskService.create(body);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            TaskDto taskDto = taskService.create(body);
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskDto);
         }catch (DataIntegrityViolationException e){
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            TaskDto taskDto = taskService.findByTxIdAndObjectIdAndObjectClassId(txId, body.getObjectId(), body.getObjectClassId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskDto);
         }
     }
 
     @Override
-    public ResponseEntity executeCancel(String txId) {
-        TaskDto taskDto = taskService.findByTxId(txId);
+    public ResponseEntity executeCancel(String txId, Long objectId, Long objectClassId) {
+        TaskDto taskDto = taskService.findByTxIdAndObjectIdAndObjectClassId(txId, objectId, objectClassId);
         if (taskDto == null) {
 //            return ResponseEntity.notFound().build();
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
@@ -60,8 +57,8 @@ public class TaskController extends TccParticipantController<TaskDto> {
     }
 
     @Override
-    public ResponseEntity executeConfirm(String txId) {
-        TaskDto taskDto = taskService.findByTxId(txId);
+    public ResponseEntity executeConfirm(String txId, Long objectId, Long objectClassId) {
+        TaskDto taskDto = taskService.findByTxIdAndObjectIdAndObjectClassId(txId, objectId, objectClassId);
         if (taskDto == null) {
 //            return ResponseEntity.notFound().build();
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

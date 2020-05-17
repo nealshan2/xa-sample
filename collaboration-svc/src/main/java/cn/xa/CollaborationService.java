@@ -29,7 +29,7 @@ public class CollaborationService {
         return collaborationMapper.toDto(collaboration);
     }
 
-    public CollaborationDto findByTxId(String txId) {
-        return collaborationMapper.toDto(collaborationRepository.findByTxId(txId));
+    public CollaborationDto findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(String txId, Long parentObjectId, Long parentObjectClassId, Long objectId, Long objectClassId) {
+        return collaborationMapper.toDto(collaborationRepository.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(txId, parentObjectId, parentObjectClassId, objectId, objectClassId));
     }
 }

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 0.0.1
  */
 public interface TaskRepository extends JpaRepository<Task, Long>{
-    Task findByTxId(String txId);
+    Task findByTxIdAndObjectIdAndObjectClassId(String txId, Long objectId, Long objectClassId);
 }
