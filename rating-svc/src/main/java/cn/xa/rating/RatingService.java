@@ -2,7 +2,7 @@ package cn.xa.rating;
 
 import cn.xa.collaboration.CollaborationClient;
 import cn.xa.collaboration.CollaborationDto;
-import cn.xa.collaboration.CollaborationType;
+import cn.xa.collaboration.ObjectClassId;
 import cn.xa.common.exception.ServiceException;
 import cn.xa.common.tcc.TccConfig;
 import cn.xa.common.tcc.TccCoordinatorClient;
@@ -10,21 +10,15 @@ import cn.xa.task.TaskClient;
 import cn.xa.task.TaskDto;
 import cn.xa.tracking.TrackingClient;
 import cn.xa.tracking.TrackingDto;
-import com.atomikos.tcc.rest.ParticipantLink;
-import com.atomikos.tcc.rest.Transaction;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Neal Shan
@@ -61,20 +55,25 @@ public class RatingService {
         String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
 
         CollaborationDto collaborationDto = CollaborationDto.builder()
-                .parentId(100L)
-                .childId(rating.getId())
-                .type(CollaborationType.RATING)
+                .parentObjectId(100L)
+                .parentObjectClassId(ObjectClassId.PROJECT)
+                .objectId(rating.getId())
+                .objectClassId(ObjectClassId.RATING)
                 .build();
         restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
 
         TrackingDto trackingDto = TrackingDto.builder()
                 .title("Create Rating " + rating.getTitle())
                 .detail(rating.toString())
+                .objectId(rating.getId())
+                .objectClassId(ObjectClassId.RATING)
                 .build();
         restTemplate.postForEntity(trackingServiceUrl, trackingDto, String.class);
 
         TaskDto taskDto = TaskDto.builder()
                 .title("Review rating " + rating.getTitle())
+                .objectId(rating.getId())
+                .objectClassId(ObjectClassId.RATING)
                 .build();
         restTemplate.postForEntity(taskServiceUrl, taskDto, String.class);
 

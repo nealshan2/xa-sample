@@ -24,4 +24,9 @@ public class TaskDto {
     private String txId;
 
     private @NotNull TccState state;
+
+    @NotNull
+    private Long objectId;
+    @NotNull
+    private Long objectClassId;
 }

@@ -27,4 +27,9 @@ public class TrackingDto {
     @NotNull
     private TccState state;
 
+    @NotNull
+    private Long objectId;
+    @NotNull
+    private Long objectClassId;
+
 }

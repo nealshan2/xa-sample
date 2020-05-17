@@ -2,7 +2,7 @@ package cn.xa.task;
 
 import cn.xa.collaboration.CollaborationClient;
 import cn.xa.collaboration.CollaborationDto;
-import cn.xa.collaboration.CollaborationType;
+import cn.xa.collaboration.ObjectClassId;
 import cn.xa.common.tcc.TccConfig;
 import cn.xa.tracking.TrackingClient;
 import cn.xa.tracking.TrackingDto;
@@ -37,9 +37,10 @@ public class TaskService {
         String txId = taskDto.getTxId();
         String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
         CollaborationDto collaborationDto = CollaborationDto.builder()
-                .parentId(100L)
-                .childId(task.getId())
-                .type(CollaborationType.TASK)
+                .parentObjectId(100L)
+                .parentObjectClassId(ObjectClassId.PROJECT)
+                .objectId(task.getId())
+                .objectClassId(ObjectClassId.TASK)
                 .build();
         restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
 
@@ -47,6 +48,8 @@ public class TaskService {
         TrackingDto trackingDto = TrackingDto.builder()
                 .title("create Task " + task.getTitle())
                 .detail(task.toString())
+                .objectId(task.getId())
+                .objectClassId(ObjectClassId.TASK)
                 .build();
         restTemplate.postForEntity(trackingServiceUrl, trackingDto, String.class);
 

@@ -21,11 +21,13 @@ public class CollaborationDto {
     @NotNull
     private String txId;
     @NotNull
-    private Long parentId;
+    private Long parentObjectId;
     @NotNull
-    private Long childId;
+    private Long parentObjectClassId;
     @NotNull
-    private String type;
+    private Long objectId;
+    @NotNull
+    private Long objectClassId;
     @NotNull
     private TccState state;
 }

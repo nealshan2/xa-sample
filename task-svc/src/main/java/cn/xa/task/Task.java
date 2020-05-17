@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@Table(uniqueConstraints = {@UniqueConstraint(name = "task_tx_idx", columnNames = {"txId"})})
+@Table(uniqueConstraints = {@UniqueConstraint(name = "task_tx_idx", columnNames = {"txId", "objectId", "objectClassId"})})
 public class Task {
 
     @Id
@@ -29,4 +29,7 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private TccState state;
+
+    private Long objectId;
+    private Long objectClassId;
 }

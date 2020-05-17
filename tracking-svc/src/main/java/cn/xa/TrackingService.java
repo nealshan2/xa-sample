@@ -2,13 +2,10 @@ package cn.xa;
 
 import cn.xa.collaboration.CollaborationClient;
 import cn.xa.collaboration.CollaborationDto;
-import cn.xa.collaboration.CollaborationType;
+import cn.xa.collaboration.ObjectClassId;
 import cn.xa.common.tcc.TccConfig;
 import cn.xa.tracking.TrackingDto;
-import com.atomikos.tcc.rest.ParticipantLink;
-import com.atomikos.tcc.rest.Transaction;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
@@ -16,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Neal Shan
@@ -41,9 +36,10 @@ public class TrackingService {
         String txId = trackingDto.getTxId();
         String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
         CollaborationDto collaborationDto = CollaborationDto.builder()
-                .parentId(100L)
-                .childId(tracking.getId())
-                .type(CollaborationType.TRACKING)
+                .parentObjectId(100L)
+                .parentObjectClassId(ObjectClassId.PROJECT)
+                .objectId(tracking.getId())
+                .objectClassId(ObjectClassId.TRACKING)
                 .txId(trackingDto.getTxId())
                 .state(trackingDto.getState())
                 .build();

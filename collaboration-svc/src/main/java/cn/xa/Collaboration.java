@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Neal Shan
@@ -17,14 +18,15 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(uniqueConstraints = {@UniqueConstraint(name = "collaboration_tx_idx", columnNames = {"txId", "type", "childId"})})
+@Table(uniqueConstraints = {@UniqueConstraint(name = "collaboration_tx_idx", columnNames = {"txId", "parentObjectId", "parentObjectClassId", "objectId", "objectClassId"})})
 public class Collaboration {
     @Id
     @GeneratedValue
     private Long id;
-    private Long parentId;
-    private Long childId;
-    private String type;
+    private Long parentObjectId;
+    private Long parentObjectClassId;
+    private Long objectId;
+    private Long objectClassId;
 
     private String txId;
     @Enumerated(EnumType.STRING)
