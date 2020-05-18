@@ -18,7 +18,7 @@
     </properties>
 
     <modules>
-        <module>tcc-coordinator-atomikos</module>
+        <module>alpha-server</module>
         <module>common-lib</module>
         <module>collaboration-api</module>
         <module>collaboration-svc</module>
