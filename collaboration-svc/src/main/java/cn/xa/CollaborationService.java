@@ -29,7 +29,8 @@ public class CollaborationService {
     @Compensable(timeout = 1, compensationMethod = "cancel")
     public CollaborationDto save(CollaborationDto collaborationDto) {
 
-        if(executedSet.contains(collaborationDto.getTxId()) || canceledSet.contains(collaborationDto.getTxId())){
+        String uniqueCode = collaborationDto.uniqueCode();
+        if(executedSet.contains(uniqueCode) || canceledSet.contains(uniqueCode)){
             return findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(
                     collaborationDto.getTxId(),
                     collaborationDto.getParentObjectId(),
@@ -42,13 +43,14 @@ public class CollaborationService {
         collaborationDto.setState(TccState.CONFIRMED);
         Collaboration collaboration = collaborationMapper.toEntity(collaborationDto);
         collaborationRepository.save(collaboration);
-        executedSet.add(collaboration.getTxId());
+        executedSet.add(uniqueCode);
 
         return collaborationMapper.toDto(collaboration);
     }
 
     public CollaborationDto cancel(CollaborationDto collaborationDto) {
-        if(canceledSet.contains(collaborationDto.getTxId()) || !executedSet.contains(collaborationDto.getTxId())){
+        String uniqueCode = collaborationDto.uniqueCode();
+        if(canceledSet.contains(uniqueCode) || !executedSet.contains(uniqueCode)){
             return findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(
                     collaborationDto.getTxId(),
                     collaborationDto.getParentObjectId(),
@@ -71,7 +73,7 @@ public class CollaborationService {
         }
         result.setState(TccState.CANCELED);
         Collaboration saved = collaborationRepository.save(result);
-        canceledSet.add(collaborationDto.getTxId());
+        canceledSet.add(uniqueCode);
 
         return collaborationMapper.toDto(saved);
     }

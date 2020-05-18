@@ -29,4 +29,8 @@ public class TaskDto {
     private Long objectId;
     @NotNull
     private Long objectClassId;
+
+    public String uniqueCode() {
+        return txId + "-" + objectId + "-" + objectClassId;
+    }
 }

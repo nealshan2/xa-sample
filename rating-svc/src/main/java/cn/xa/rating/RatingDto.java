@@ -28,4 +28,8 @@ public class RatingDto {
 
     @NotNull
     private TccState state;
+
+    public String uniqueCode() {
+        return txId;
+    }
 }

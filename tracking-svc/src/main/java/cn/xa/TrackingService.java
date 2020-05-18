@@ -39,7 +39,8 @@ public class TrackingService {
     @Compensable(timeout = 1, compensationMethod = "cancel")
     public TrackingDto save(TrackingDto trackingDto) {
 
-        if(executedSet.contains(trackingDto.getTxId()) || canceledSet.contains(trackingDto.getTxId())){
+        String uniqueCode = trackingDto.uniqueCode();
+        if(executedSet.contains(uniqueCode) || canceledSet.contains(uniqueCode)){
             return findByTxIdAndObjectIdAndObjectClassId(
                     trackingDto.getTxId(),
                     trackingDto.getObjectId(),
@@ -52,7 +53,7 @@ public class TrackingService {
         Tracking tracking = trackingMapper.toEntity(trackingDto);
         trackingRepository.save(tracking);
 
-        executedSet.add(trackingDto.getTxId());
+        executedSet.add(uniqueCode);
 
         return trackingMapper.toDto(tracking);
     }
@@ -63,7 +64,8 @@ public class TrackingService {
 
     public TrackingDto cancel(TrackingDto trackingDto) {
 
-        if(canceledSet.contains(trackingDto.getTxId()) || !executedSet.contains(trackingDto.getTxId())){
+        String uniqueCode = trackingDto.uniqueCode();
+        if(canceledSet.contains(uniqueCode) || !executedSet.contains(uniqueCode)){
             return findByTxIdAndObjectIdAndObjectClassId(
                     trackingDto.getTxId(),
                     trackingDto.getObjectId(),
@@ -78,7 +80,7 @@ public class TrackingService {
         );
         result.setState(TccState.CANCELED);
         Tracking saved = trackingRepository.save(result);
-        canceledSet.add(saved.getTxId());
+        canceledSet.add(uniqueCode);
 
         return trackingMapper.toDto(saved);
     }

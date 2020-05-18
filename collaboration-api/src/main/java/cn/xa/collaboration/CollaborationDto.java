@@ -30,4 +30,8 @@ public class CollaborationDto {
     private Long objectClassId;
     @NotNull
     private TccState state;
+
+    public String uniqueCode() {
+        return txId + "-" + parentObjectId + "-" + parentObjectClassId + "-" + objectId + "-" + objectClassId;
+    }
 }

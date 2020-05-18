@@ -32,4 +32,8 @@ public class TrackingDto {
     @NotNull
     private Long objectClassId;
 
+    public String uniqueCode() {
+        return txId + "-" + objectId + "-" + objectClassId;
+    }
+
 }

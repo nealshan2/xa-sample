@@ -39,7 +39,8 @@ public class TaskService {
 
     @Compensable(timeout = 1, compensationMethod = "cancel")
     public TaskDto save(TaskDto taskDto) {
-        if(executedSet.contains(taskDto.getTxId()) || canceledSet.contains(taskDto.getTxId())){
+        String uniqueCode = taskDto.uniqueCode();
+        if(executedSet.contains(uniqueCode) || canceledSet.contains(uniqueCode)){
             return findByTxIdAndObjectIdAndObjectClassId(
                     taskDto.getTxId(),
                     taskDto.getObjectId(),
@@ -52,7 +53,7 @@ public class TaskService {
         Task task = taskMapper.toEntity(taskDto);
         taskRepository.save(task);
 
-        executedSet.add(task.getTxId());
+        executedSet.add(uniqueCode);
 
         return taskMapper.toDto(task);
     }
@@ -62,7 +63,8 @@ public class TaskService {
     }
 
     public TaskDto cancel(TaskDto taskDto) {
-        if(canceledSet.contains(taskDto.getTxId()) || !executedSet.contains(taskDto.getTxId())){
+        String uniqueCode = taskDto.uniqueCode();
+        if(canceledSet.contains(uniqueCode) || !executedSet.contains(uniqueCode)){
             return findByTxIdAndObjectIdAndObjectClassId(
                     taskDto.getTxId(),
                     taskDto.getObjectId(),
@@ -77,7 +79,7 @@ public class TaskService {
         );
         result.setState(TccState.CANCELED);
         Task saved = taskRepository.save(result);
-        canceledSet.add(saved.getTxId());
+        canceledSet.add(uniqueCode);
 
         return taskMapper.toDto(saved);
     }

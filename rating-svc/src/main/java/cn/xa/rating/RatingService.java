@@ -36,7 +36,8 @@ public class RatingService {
     @Compensable(timeout = 1, compensationMethod = "cancel")
     public RatingDto save(RatingDto ratingDto) {
 
-        if(executedSet.contains(ratingDto.getTxId()) || canceledSet.contains(ratingDto.getTxId())){
+        String uniqueCode = ratingDto.uniqueCode();
+        if(executedSet.contains(uniqueCode) || canceledSet.contains(uniqueCode)){
             return findByTxId(
                     ratingDto.getTxId()
             );
@@ -45,7 +46,7 @@ public class RatingService {
         ratingDto.setState(TccState.CONFIRMED);
         Rating rating = ratingMapper.toEntity(ratingDto);
         ratingRepository.save(rating);
-        executedSet.add(rating.getTxId());
+        executedSet.add(uniqueCode);
 
         return ratingMapper.toDto(rating);
     }
@@ -55,7 +56,8 @@ public class RatingService {
     }
 
     public RatingDto cancel(RatingDto ratingDto) {
-        if(canceledSet.contains(ratingDto.getTxId()) || !executedSet.contains(ratingDto.getTxId())){
+        String uniqueCode = ratingDto.uniqueCode();
+        if(canceledSet.contains(uniqueCode) || !executedSet.contains(uniqueCode)){
             return findByTxId(
                     ratingDto.getTxId()
             );
@@ -66,7 +68,7 @@ public class RatingService {
         );
         result.setState(TccState.CANCELED);
         Rating saved = ratingRepository.save(result);
-        canceledSet.add(saved.getTxId());
+        canceledSet.add(uniqueCode);
 
         return ratingMapper.toDto(saved);
     }
