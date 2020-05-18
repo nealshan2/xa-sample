@@ -13,6 +13,14 @@
 	<name>task-svc</name>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.apache.servicecomb.saga</groupId>
+            <artifactId>omega-spring-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.servicecomb.saga</groupId>
+            <artifactId>omega-transport-resttemplate</artifactId>
+        </dependency>
 		<!-- Common Lib -->
 		<dependency>
 			<groupId>cn.xa</groupId>

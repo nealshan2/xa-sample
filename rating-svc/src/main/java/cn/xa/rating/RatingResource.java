@@ -10,6 +10,7 @@ import cn.xa.tracking.TrackingDto;
 import com.atomikos.tcc.rest.ParticipantLink;
 import com.atomikos.tcc.rest.Transaction;
 import lombok.RequiredArgsConstructor;
+import org.apache.servicecomb.saga.omega.context.annotations.SagaStart;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ public class RatingResource {
     private final RestTemplate restTemplate;
     private final TccCoordinatorClient tccCoordinatorClient;
 
+    @SagaStart(timeout = 2)
     @PostMapping("/create")
     public ResponseEntity createRating(@RequestBody CreateRatingRequest createRatingRequest) {
         String txId = createRatingRequest.getTxId();
