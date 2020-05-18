@@ -53,6 +53,14 @@ public class TrackingService {
         Tracking tracking = trackingMapper.toEntity(trackingDto);
         trackingRepository.save(tracking);
 
+        CollaborationDto trackingCollaborationDto = CollaborationDto.builder()
+                .parentObjectId(100L)
+                .parentObjectClassId(ObjectClassId.PROJECT)
+                .objectId(tracking.getId())
+                .objectClassId(ObjectClassId.TRACKING)
+                .build();
+        restTemplate.postForEntity(TccConfig.COLLABORATION_TCC_URL, trackingCollaborationDto, String.class);
+
         executedSet.add(uniqueCode);
 
         return trackingMapper.toDto(tracking);

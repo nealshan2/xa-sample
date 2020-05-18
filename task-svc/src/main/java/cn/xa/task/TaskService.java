@@ -53,6 +53,24 @@ public class TaskService {
         Task task = taskMapper.toEntity(taskDto);
         taskRepository.save(task);
 
+        // create tracking for task
+        TrackingDto taskTrackingDto = TrackingDto.builder()
+                .title("Create Task " + taskDto.getTitle())
+                .detail(taskDto.toString())
+                .objectId(task.getId())
+                .objectClassId(ObjectClassId.TASK)
+                .build();
+        taskTrackingDto = restTemplate.postForObject(TccConfig.TRACKING_TCC_URL, taskTrackingDto, TrackingDto.class);
+
+        // create collaboraiton for task's tracking
+        CollaborationDto taskTrackingCollaborationDto = CollaborationDto.builder()
+                .parentObjectId(100L)
+                .parentObjectClassId(ObjectClassId.PROJECT)
+                .objectId(taskTrackingDto.getId())
+                .objectClassId(ObjectClassId.TRACKING)
+                .build();
+        restTemplate.postForEntity(TccConfig.COLLABORATION_TCC_URL, taskTrackingCollaborationDto, String.class);
+
         executedSet.add(uniqueCode);
 
         return taskMapper.toDto(task);
