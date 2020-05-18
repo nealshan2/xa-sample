@@ -41,24 +41,24 @@ public class RatingResource {
         ratingDto = restTemplate.postForObject(TccConfig.RATING_TCC_URL, ratingDto, RatingDto.class);
 
 
-        // create collaboration for rating
-        CollaborationDto collaborationDto = CollaborationDto.builder()
-                .parentObjectId(100L)
-                .parentObjectClassId(ObjectClassId.PROJECT)
-                .objectId(ratingDto.getId())
-                .objectClassId(ObjectClassId.RATING)
-                .build();
-        restTemplate.postForEntity(TccConfig.COLLABORATION_TCC_URL, collaborationDto, String.class);
+//        // create collaboration for rating
+//        CollaborationDto collaborationDto = CollaborationDto.builder()
+//                .parentObjectId(100L)
+//                .parentObjectClassId(ObjectClassId.PROJECT)
+//                .objectId(ratingDto.getId())
+//                .objectClassId(ObjectClassId.RATING)
+//                .build();
+//        restTemplate.postForEntity(TccConfig.COLLABORATION_TCC_URL, collaborationDto, String.class);
 
 
-        // create tracking for rating
-        TrackingDto trackingDto = TrackingDto.builder()
-                .title("Create Rating " + ratingDto.getTitle())
-                .detail(ratingDto.toString())
-                .objectId(ratingDto.getId())
-                .objectClassId(ObjectClassId.RATING)
-                .build();
-        trackingDto = restTemplate.postForObject(TccConfig.TRACKING_TCC_URL, trackingDto, TrackingDto.class);
+//        // create tracking for rating
+//        TrackingDto trackingDto = TrackingDto.builder()
+//                .title("Create Rating " + ratingDto.getTitle())
+//                .detail(ratingDto.toString())
+//                .objectId(ratingDto.getId())
+//                .objectClassId(ObjectClassId.RATING)
+//                .build();
+//        trackingDto = restTemplate.postForObject(TccConfig.TRACKING_TCC_URL, trackingDto, TrackingDto.class);
 
 //        // create collaboration for rating's tracking
 //        CollaborationDto trackingCollaborationDto = CollaborationDto.builder()
@@ -69,13 +69,13 @@ public class RatingResource {
 //                .build();
 //        restTemplate.postForEntity(TccConfig.COLLABORATION_TCC_URL, trackingCollaborationDto, String.class);
 
-        // create task for rating
-        TaskDto taskDto = TaskDto.builder()
-                .title("Review rating " + ratingDto.getTitle())
-                .objectId(ratingDto.getId())
-                .objectClassId(ObjectClassId.RATING)
-                .build();
-        taskDto = restTemplate.postForObject(TccConfig.TASK_TCC_URL, taskDto, TaskDto.class);
+//        // create task for rating
+//        TaskDto taskDto = TaskDto.builder()
+//                .title("Review rating " + ratingDto.getTitle())
+//                .objectId(ratingDto.getId())
+//                .objectClassId(ObjectClassId.RATING)
+//                .build();
+//        taskDto = restTemplate.postForObject(TccConfig.TASK_TCC_URL, taskDto, TaskDto.class);
 
 //        // create collaboraiton for task
 //        CollaborationDto taskCollaborationDto = CollaborationDto.builder()

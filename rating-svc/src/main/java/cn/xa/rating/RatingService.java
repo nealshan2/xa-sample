@@ -52,31 +52,31 @@ public class RatingService {
         Rating rating = ratingMapper.toEntity(ratingDto);
         ratingRepository.save(rating);
 
-//        // create collaboration for rating
-//        CollaborationDto collaborationDto = CollaborationDto.builder()
-//                .parentObjectId(100L)
-//                .parentObjectClassId(ObjectClassId.PROJECT)
-//                .objectId(rating.getId())
-//                .objectClassId(ObjectClassId.RATING)
-//                .build();
-//        restTemplate.postForEntity(TccConfig.COLLABORATION_TCC_URL, collaborationDto, String.class);
-//
-//        // create tracking for rating
-//        TrackingDto trackingDto = TrackingDto.builder()
-//                .title("Create Rating " + rating.getTitle())
-//                .detail(rating.toString())
-//                .objectId(rating.getId())
-//                .objectClassId(ObjectClassId.RATING)
-//                .build();
-//        trackingDto = restTemplate.postForObject(TccConfig.TRACKING_TCC_URL, trackingDto, TrackingDto.class);
-//
-//        // create task for rating
-//        TaskDto taskDto = TaskDto.builder()
-//                .title("Review rating " + rating.getTitle())
-//                .objectId(rating.getId())
-//                .objectClassId(ObjectClassId.RATING)
-//                .build();
-//        taskDto = restTemplate.postForObject(TccConfig.TASK_TCC_URL, taskDto, TaskDto.class);
+        // create collaboration for rating
+        CollaborationDto collaborationDto = CollaborationDto.builder()
+                .parentObjectId(100L)
+                .parentObjectClassId(ObjectClassId.PROJECT)
+                .objectId(rating.getId())
+                .objectClassId(ObjectClassId.RATING)
+                .build();
+        restTemplate.postForEntity(TccConfig.COLLABORATION_TCC_URL, collaborationDto, String.class);
+
+        // create tracking for rating
+        TrackingDto trackingDto = TrackingDto.builder()
+                .title("Created Rating " + rating.getTitle())
+                .detail(rating.toString())
+                .objectId(rating.getId())
+                .objectClassId(ObjectClassId.RATING)
+                .build();
+        trackingDto = restTemplate.postForObject(TccConfig.TRACKING_TCC_URL, trackingDto, TrackingDto.class);
+
+        // create task for rating
+        TaskDto taskDto = TaskDto.builder()
+                .title("Review rating " + rating.getTitle())
+                .objectId(rating.getId())
+                .objectClassId(ObjectClassId.RATING)
+                .build();
+        taskDto = restTemplate.postForObject(TccConfig.TASK_TCC_URL, taskDto, TaskDto.class);
 
 
         executedSet.add(uniqueCode);

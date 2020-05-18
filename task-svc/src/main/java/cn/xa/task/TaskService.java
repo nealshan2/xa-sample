@@ -64,7 +64,7 @@ public class TaskService {
 
         // create tracking for task
         TrackingDto taskTrackingDto = TrackingDto.builder()
-                .title("Create Task " + taskDto.getTitle())
+                .title("Created Task " + taskDto.getTitle())
                 .detail(taskDto.toString())
                 .objectId(task.getId())
                 .objectClassId(ObjectClassId.TASK)
