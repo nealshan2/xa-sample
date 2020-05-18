@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class TrackingController {
     private final OmegaContext omegaContext;
 
     @PostMapping(value = "/save")
-    public ResponseEntity save(TrackingDto body) {
+    public ResponseEntity save(@RequestBody TrackingDto body) {
         body.setTxId(omegaContext.globalTxId());
         TrackingDto trackingDto = trackingService.save(body);
         return ResponseEntity.status(HttpStatus.CREATED).body(trackingDto);
