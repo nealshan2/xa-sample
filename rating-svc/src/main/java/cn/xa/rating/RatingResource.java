@@ -35,7 +35,6 @@ public class RatingResource {
 
         // create rating
         RatingDto ratingDto = RatingDto.builder()
-                .state(TccState.TRY)
                 .title(createRatingRequest.getTitle())
                 .reference(createRatingRequest.getReference())
                 .build();
