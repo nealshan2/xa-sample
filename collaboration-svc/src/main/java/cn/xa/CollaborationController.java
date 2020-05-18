@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class CollaborationController {
     private final OmegaContext omegaContext;
 
     @PostMapping(value = "/save")
-    public ResponseEntity save(CollaborationDto body) {
+    public ResponseEntity save(@RequestBody CollaborationDto body) {
         body.setTxId(omegaContext.globalTxId());
         CollaborationDto collaborationDto = collaborationService.save(body);
         return ResponseEntity.status(HttpStatus.CREATED).body(collaborationDto);
