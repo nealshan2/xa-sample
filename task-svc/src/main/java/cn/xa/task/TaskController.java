@@ -22,7 +22,7 @@ public class TaskController {
     private final TaskService taskService;
     private final OmegaContext omegaContext;
 
-    @PostMapping(value = "/tcc/{txId}/{objectId}/{objectClassId}")
+    @PostMapping(value = "/save")
     public ResponseEntity save(TaskDto body) {
         body.setTxId(omegaContext.globalTxId());
         TaskDto taskDto = taskService.save(body);

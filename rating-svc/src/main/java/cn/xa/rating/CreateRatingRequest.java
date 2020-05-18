@@ -20,5 +20,4 @@ public class CreateRatingRequest {
     private Long id;
     private String title;
     private String reference;
-    private String txId;
 }

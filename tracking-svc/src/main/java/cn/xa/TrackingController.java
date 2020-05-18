@@ -23,7 +23,7 @@ public class TrackingController {
     private final TrackingService trackingService;
     private final OmegaContext omegaContext;
 
-    @PostMapping(value = "/tcc/{txId}/{objectId}/{objectClassId}")
+    @PostMapping(value = "/save")
     public ResponseEntity save(TrackingDto body) {
         body.setTxId(omegaContext.globalTxId());
         TrackingDto trackingDto = trackingService.save(body);

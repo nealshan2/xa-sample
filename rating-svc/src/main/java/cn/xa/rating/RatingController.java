@@ -20,7 +20,7 @@ public class RatingController {
     private final RatingService ratingService;
     private final OmegaContext omegaContext;
 
-    @PostMapping(value = "/tcc/{txId}/{objectId}/{objectClassId}")
+    @PostMapping(value = "/save")
     public ResponseEntity save(RatingDto body) {
         body.setTxId(omegaContext.globalTxId());
         RatingDto ratingDto = ratingService.save(body);

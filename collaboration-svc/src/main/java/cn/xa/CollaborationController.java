@@ -23,7 +23,7 @@ public class CollaborationController {
     private final CollaborationService collaborationService;
     private final OmegaContext omegaContext;
 
-    @PostMapping(value = "/tcc/{txId}/{parentObjectId}/{parentObjectClassId}/{objectId}/{objectClassId}")
+    @PostMapping(value = "/save")
     public ResponseEntity save(CollaborationDto body) {
         body.setTxId(omegaContext.globalTxId());
         CollaborationDto collaborationDto = collaborationService.save(body);
