@@ -39,9 +39,10 @@ public class CollaborationService {
             );
         }
 
+        collaborationDto.setState(TccState.CONFIRMED);
         Collaboration collaboration = collaborationMapper.toEntity(collaborationDto);
         collaborationRepository.save(collaboration);
-        executedSet.add(collaborationDto.getTxId());
+        executedSet.add(collaboration.getTxId());
 
         return collaborationMapper.toDto(collaboration);
     }
@@ -57,7 +58,7 @@ public class CollaborationService {
             );
         }
 
-        CollaborationDto result = findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(
+        Collaboration result = collaborationRepository.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(
                 collaborationDto.getTxId(),
                 collaborationDto.getParentObjectId(),
                 collaborationDto.getParentObjectClassId(),
@@ -69,9 +70,9 @@ public class CollaborationService {
             throw new IllegalStateException();
         }
         result.setState(TccState.CANCELED);
+        Collaboration saved = collaborationRepository.save(result);
+        canceledSet.add(collaborationDto.getTxId());
 
-        Collaboration collaboration = collaborationMapper.toEntity(result);
-        Collaboration saved = collaborationRepository.save(collaboration);
         return collaborationMapper.toDto(saved);
     }
 

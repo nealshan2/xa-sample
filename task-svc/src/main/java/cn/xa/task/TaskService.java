@@ -4,9 +4,11 @@ import cn.xa.collaboration.CollaborationClient;
 import cn.xa.collaboration.CollaborationDto;
 import cn.xa.collaboration.ObjectClassId;
 import cn.xa.common.tcc.TccConfig;
+import cn.xa.common.tcc.TccState;
 import cn.xa.tracking.TrackingClient;
 import cn.xa.tracking.TrackingDto;
 import lombok.RequiredArgsConstructor;
+import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Neal Shan
@@ -29,29 +33,26 @@ public class TaskService {
     private final CollaborationClient collaborationClient;
     private final TrackingClient trackingClient;
     private final RestTemplate restTemplate;
+    private Set<String> executedSet = new ConcurrentHashMap<>().newKeySet();
 
-    public TaskDto create(TaskDto taskDto) {
+    private Set<String> canceledSet = new ConcurrentHashMap<>().newKeySet();
+
+    @Compensable(timeout = 1, compensationMethod = "cancel")
+    public TaskDto save(TaskDto taskDto) {
+        if(executedSet.contains(taskDto.getTxId()) || canceledSet.contains(taskDto.getTxId())){
+            return findByTxIdAndObjectIdAndObjectClassId(
+                    taskDto.getTxId(),
+                    taskDto.getObjectId(),
+                    taskDto.getObjectClassId()
+            );
+        }
+
+        taskDto.setState(TccState.CONFIRMED);
+
         Task task = taskMapper.toEntity(taskDto);
         taskRepository.save(task);
 
-//        String txId = taskDto.getTxId();
-//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-//        CollaborationDto collaborationDto = CollaborationDto.builder()
-//                .parentObjectId(100L)
-//                .parentObjectClassId(ObjectClassId.PROJECT)
-//                .objectId(task.getId())
-//                .objectClassId(ObjectClassId.TASK)
-//                .build();
-//        restTemplate.postForEntity(collaborationServiceUrl, collaborationDto, String.class);
-//
-//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-//        TrackingDto trackingDto = TrackingDto.builder()
-//                .title("create Task " + task.getTitle())
-//                .detail(task.toString())
-//                .objectId(task.getId())
-//                .objectClassId(ObjectClassId.TASK)
-//                .build();
-//        restTemplate.postForEntity(trackingServiceUrl, trackingDto, String.class);
+        executedSet.add(task.getTxId());
 
         return taskMapper.toDto(task);
     }
@@ -60,38 +61,25 @@ public class TaskService {
         return taskMapper.toDto(taskRepository.findByTxIdAndObjectIdAndObjectClassId(txId, objectId, objectClassId));
     }
 
-    public TaskDto delete(TaskDto taskDto) {
-        Task task = taskMapper.toEntity(taskDto);
-        taskRepository.save(task);
+    public TaskDto cancel(TaskDto taskDto) {
+        if(canceledSet.contains(taskDto.getTxId()) || !executedSet.contains(taskDto.getTxId())){
+            return findByTxIdAndObjectIdAndObjectClassId(
+                    taskDto.getTxId(),
+                    taskDto.getObjectId(),
+                    taskDto.getObjectClassId()
+            );
+        }
 
-        String txId = taskDto.getTxId();
-        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-        restTemplate.delete(collaborationServiceUrl);
+        Task result = taskRepository.findByTxIdAndObjectIdAndObjectClassId(
+                taskDto.getTxId(),
+                taskDto.getObjectId(),
+                taskDto.getObjectClassId()
+        );
+        result.setState(TccState.CANCELED);
+        Task saved = taskRepository.save(result);
+        canceledSet.add(saved.getTxId());
 
-        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-        restTemplate.delete(trackingServiceUrl);
-
-        return taskMapper.toDto(task);
+        return taskMapper.toDto(saved);
     }
 
-    public TaskDto save(TaskDto taskDto) {
-        Task task = taskMapper.toEntity(taskDto);
-        taskRepository.save(task);
-
-//        String txId = taskDto.getTxId();
-//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-//        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
-//                .contentType(new MediaType("application", "tcc"))
-//                .build();
-//        restTemplate.exchange(requestEntity, String.class);
-//
-//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-//        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
-//                .contentType(new MediaType("application", "tcc"))
-//                .build();
-//        restTemplate.exchange(requestEntity, String.class);
-
-        return taskMapper.toDto(task);
-
-    }
 }

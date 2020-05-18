@@ -1,24 +1,17 @@
 package cn.xa.rating;
 
 import cn.xa.collaboration.CollaborationClient;
-import cn.xa.collaboration.CollaborationDto;
-import cn.xa.collaboration.ObjectClassId;
-import cn.xa.common.exception.ServiceException;
-import cn.xa.common.tcc.TccConfig;
-import cn.xa.common.tcc.TccCoordinatorClient;
+import cn.xa.common.tcc.TccState;
 import cn.xa.task.TaskClient;
-import cn.xa.task.TaskDto;
 import cn.xa.tracking.TrackingClient;
-import cn.xa.tracking.TrackingDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
+import org.apache.servicecomb.saga.omega.transaction.annotations.Compensable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Neal Shan
@@ -35,18 +28,24 @@ public class RatingService {
     private final TrackingClient trackingClient;
     private final CollaborationClient collaborationClient;
     private final RestTemplate restTemplate;
-    private final TccCoordinatorClient tccCoordinatorClient;
 
-    public RatingDto create(RatingDto ratingDto) {
-        if (StringUtils.hasText(ratingDto.getReference())) {
-            Rating rating = ratingRepository.findByReference(ratingDto.getReference());
-            if (rating != null) {
-                throw new ServiceException("rating reference is exist, please input a new one");
-            }
+    private Set<String> executedSet = new ConcurrentHashMap<>().newKeySet();
+
+    private Set<String> canceledSet = new ConcurrentHashMap<>().newKeySet();
+
+    @Compensable(timeout = 1, compensationMethod = "cancel")
+    public RatingDto save(RatingDto ratingDto) {
+
+        if(executedSet.contains(ratingDto.getTxId()) || canceledSet.contains(ratingDto.getTxId())){
+            return findByTxId(
+                    ratingDto.getTxId()
+            );
         }
 
+        ratingDto.setState(TccState.CONFIRMED);
         Rating rating = ratingMapper.toEntity(ratingDto);
         ratingRepository.save(rating);
+        executedSet.add(rating.getTxId());
 
         return ratingMapper.toDto(rating);
     }
@@ -55,49 +54,21 @@ public class RatingService {
         return ratingMapper.toDto(ratingRepository.findByTxId(txId));
     }
 
-    public RatingDto delete(RatingDto ratingDto) {
-        Rating rating = ratingMapper.toEntity(ratingDto);
-        ratingRepository.save(rating);
+    public RatingDto cancel(RatingDto ratingDto) {
+        if(canceledSet.contains(ratingDto.getTxId()) || !executedSet.contains(ratingDto.getTxId())){
+            return findByTxId(
+                    ratingDto.getTxId()
+            );
+        }
 
-//        String txId = ratingDto.getTxId();
-//
-//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-//        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
-//        restTemplate.delete(collaborationServiceUrl);
-//        restTemplate.delete(trackingServiceUrl);
-//        restTemplate.delete(taskServiceUrl);
+        Rating result = ratingRepository.findByTxId(
+                ratingDto.getTxId()
+        );
+        result.setState(TccState.CANCELED);
+        Rating saved = ratingRepository.save(result);
+        canceledSet.add(saved.getTxId());
 
-
-        return ratingMapper.toDto(rating);
-    }
-
-    public RatingDto save(RatingDto ratingDto) {
-        Rating rating = ratingMapper.toEntity(ratingDto);
-        ratingRepository.save(rating);
-
-//        String txId = ratingDto.getTxId();
-//
-//        String collaborationServiceUrl = String.format(TccConfig.COLLABORATION_TCC_URL, txId);
-//        RequestEntity<Void> requestEntity = RequestEntity.put(URI.create(collaborationServiceUrl))
-//                .contentType(new MediaType("application", "tcc"))
-//                .build();
-//        restTemplate.exchange(requestEntity, String.class);
-//
-//        String trackingServiceUrl = String.format(TccConfig.TRACKING_TCC_URL, txId);
-//        requestEntity = RequestEntity.put(URI.create(trackingServiceUrl))
-//                .contentType(new MediaType("application", "tcc"))
-//                .build();
-//        restTemplate.exchange(requestEntity, String.class);
-//
-//        String taskServiceUrl = String.format(TccConfig.TASK_TCC_URL, txId);
-//        requestEntity = RequestEntity.put(URI.create(taskServiceUrl))
-//                .contentType(new MediaType("application", "tcc"))
-//                .build();
-//        restTemplate.exchange(requestEntity, String.class);
-
-        return ratingMapper.toDto(rating);
-
+        return ratingMapper.toDto(saved);
     }
 
 }
