@@ -3,9 +3,12 @@ package cn.xa;
 import cn.xa.collaboration.CollaborationDto;
 import cn.xa.common.tcc.TccState;
 import lombok.RequiredArgsConstructor;
+import org.apache.servicecomb.saga.omega.context.OmegaContext;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,55 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1/collaboration")
 @RequiredArgsConstructor
-public class CollaborationController extends TccParticipantController<CollaborationDto> {
+public class CollaborationController {
     private final CollaborationService collaborationService;
+    private final OmegaContext omegaContext;
 
-//    @PostMapping("/create")
-//    public CollaborationDto createCollaboration(
-//            @RequestBody @Valid CollaborationDto collaborationDto) {
-//        return collaborationService.create(collaborationDto);
-//    }
-
-    @Override
-    public String getParticipantName() {
-        return "collaboration";
+    @PostMapping(value = "/tcc/{txId}/{parentObjectId}/{parentObjectClassId}/{objectId}/{objectClassId}")
+    public ResponseEntity save(CollaborationDto body) {
+        body.setTxId(omegaContext.globalTxId());
+        body.setState(TccState.CONFIRMED);
+        CollaborationDto collaborationDto = collaborationService.save(body);
+        return ResponseEntity.status(HttpStatus.CREATED).body(collaborationDto);
     }
 
-    @Override
-    public ResponseEntity executeTry(String txId, CollaborationDto body) {
-        body.setTxId(txId);
-        body.setState(TccState.TRY);
-        try{
-            CollaborationDto collaborationDto = collaborationService.create(body);
-            return ResponseEntity.status(HttpStatus.CREATED).body(collaborationDto);
-        }catch (DataIntegrityViolationException e){
-            CollaborationDto collaborationDto = collaborationService.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(txId,
-                    body.getParentObjectId(), body.getParentObjectClassId(), body.getObjectId(), body.getObjectClassId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(collaborationDto);
-        }
-    }
-
-    @Override
-    public ResponseEntity executeCancel(String txId, Long parentObjectId, Long parentObjectClassId, Long objectId, Long objectClassId) {
-        CollaborationDto collaborationDto = collaborationService.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(txId, parentObjectId, parentObjectClassId, objectId, objectClassId);
-        if (collaborationDto == null) {
-//            return ResponseEntity.notFound().build();
-            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-        }
-        collaborationDto.setState(TccState.CANCELED);
-        collaborationService.save(collaborationDto);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
-    }
-
-    @Override
-    public ResponseEntity executeConfirm(String txId, Long parentObjectId, Long parentObjectClassId, Long objectId, Long objectClassId) {
-        CollaborationDto collaborationDto = collaborationService.findByTxIdAndParentObjectIdAndParentObjectClassIdAndObjectIdAndObjectClassId(txId, parentObjectId, parentObjectClassId, objectId, objectClassId);
-        if (collaborationDto == null) {
-//            return ResponseEntity.notFound().build();
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        collaborationDto.setState(TccState.CONFIRMED);
-        collaborationService.save(collaborationDto);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
 }
